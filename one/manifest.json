@@ -4,7 +4,8 @@
     "description": "Intelligent Automation from Factor Labs",
     "permissions":[
         "storage",
-        "contextMenus"
+        "contextMenus",
+        "activeTab"
     ],
     "browser_action": {
 	    "default_icon": {
