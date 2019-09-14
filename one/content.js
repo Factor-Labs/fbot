@@ -7,8 +7,10 @@ function injectChatbox() {
   div.className = 'play-chatbot';
   div.setAttribute("style", "color:red; border: 1px solid blue;");
   chrome.runtime.sendMessage({cmd: "read_file"}, function(html){
-    $("#play-chatbot").html(html);
+  $(".play-chatbot").html(html);
   });
 }
 
 injectChatbox();
+
+console.log("console js script started !");

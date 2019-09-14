@@ -9,10 +9,12 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.cmd == "read_file") {
         $.ajax({
-            url: chrome.extension.getURL("chatbox.html"),
+            url: chrome.extension.getURL("chatbot.html"),
             dataType: "html",
             success: sendResponse
         });
+      console.log("Got request read_file.");
+      return true;
     }
 })
 
