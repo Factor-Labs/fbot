@@ -1,3 +1,5 @@
+import {say_hello} from "./mymod.js";
+
 let changeColor = document.getElementById('changeColor');
 
 chrome.storage.sync.get('color', function(data) {
@@ -12,4 +14,6 @@ changeColor.onclick = function(element) {
           tabs[0].id,
           {code: 'document.body.style.backgroundColor = "' + color + '";'});
     });
+    say_hello();
   };
+
