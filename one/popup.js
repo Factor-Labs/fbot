@@ -9,11 +9,23 @@ chrome.storage.sync.get('color', function(data) {
 
 changeColor.onclick = function(element) {
     let color = element.target.value;
+  /*
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.executeScript(
           tabs[0].id,
           {code: 'document.body.style.backgroundColor = "' + color + '";'});
-    });
-    say_hello();
+    }); */
+    toggleInPageChatbot();
   };
 
+function toggleInPageChatbot() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var currTab = tabs[0];
+    if (currTab) { // Sanity check
+      // send message to tab.
+      chrome.tabs.sendMessage(tabs[0].id, {cmd: "toggle"}, function(response) {
+    // console.log("So the result was:" + response.result);
+  });
+    }
+  });
+}
