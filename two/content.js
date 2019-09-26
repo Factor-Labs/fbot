@@ -1,11 +1,11 @@
 // Content.js Content script for the Factor One Chrome Extension.
 
 
-const script = document.createElement('script')
-script.setAttribute('type', 'module')
-script.setAttribute('src', chrome.extension.getURL('index.js'))
-const head = document.head || document.getElementsByTagName('head')[0] || document.documentElement
-head.insertBefore(script, head.lastChild)
+// const script = document.createElement('script')
+// script.setAttribute('type', 'module')
+// script.setAttribute('src', chrome.extension.getURL('rrweb.js'))
+// const head = document.head || document.getElementsByTagName('head')[0] || document.documentElement
+// head.insertBefore(script, head.lastChild)
 let chatbotEnabled = false;
 
 function injectChatbox() {
@@ -45,13 +45,5 @@ function toggleChatbot() {
 }
 
 function captureDomSnapshot() {
-  const snapshot = new DomSnapshot();
-  snapshot.loaded().then(()=>{
-    const id = snapshot.saveSnapshot();
-    console.log('snapshotId', id);
-    setTimeout(() => {
-      console.log('restoring current snapshot');
-      snapshot.showSnapshot(id)
-    }, 3000);
-  });
+  console.log(myTestObject.sayHello());
 }

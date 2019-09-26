@@ -1,5 +1,5 @@
 {
-    "name": "One Factor",
+    "name": "Two Factor",
     "version": "1.1",
     "description": "Intelligent Automation from Factor Labs",
     "permissions":[
@@ -32,12 +32,11 @@
 	    ],
       "run_at": "document_idle",
 	    "js":["jquery-3.4.1.min.js",
-            "firebase-app.js",
-            "index.js", "content.js"]
+            "rrweb.js", "content.js"]
     }
     ],
     "web_accessible_resources": [
-      "index.js"
+      "rrweb.js"
     ],
     "manifest_version": 2
 }
