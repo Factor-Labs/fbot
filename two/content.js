@@ -19,17 +19,22 @@ function injectChatbox() {
   });
 }
 
-injectChatbox();
+//injectChatbox();
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(sender.tab ?
       "from a content script:" + sender.tab.url :
       "from the extension");
-    if (request.cmd == "toggle") {
-      toggleChatbot();
+    if (request.cmd == "newCast") {
+      newCast(request.castId);
       sendResponse({result: "success"});
-      captureDomSnapshot();
+    } else if (request.cmd == "connectCast") {
+      connectCast(request.castId);
+      sendResponse({result: "success"});
+    } else {
+      console.log("Unknown message received from popup:" + request);
+      sendResponse({result: "failure"});
     }
   });
 
@@ -46,4 +51,13 @@ function toggleChatbot() {
 
 function captureDomSnapshot() {
   console.log(myTestObject.sayHello());
+}
+
+function newCast(castId) {
+  alert("Starting cast with ID: " + castId);
+}
+
+function connectCast(castId) {
+  alert("Connecting to cast with ID: " + castId);
+  chrome.tabs.create({ url: chrome.extension.getURL('factor.html')});
 }

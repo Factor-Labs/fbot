@@ -9,5 +9,4 @@ var TestObject = (function () {
   return TestObject;
 } () );
 
-
 var myTestObject = new TestObject("Test name");

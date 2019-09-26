@@ -1,28 +1,41 @@
-let changeColor = document.getElementById('changeColor');
+let newCast = document.getElementById('newCast');
+let connectCast = document.getElementById('connectCast');
 
-chrome.storage.sync.get('color', function(data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
+// chrome.storage.sync.get('color', function(data) {
+//   changeColor.style.backgroundColor = data.color;
+//   changeColor.setAttribute('value', data.color);
+// });
 
-changeColor.onclick = function(element) {
-    let color = element.target.value;
+
+newCast.onclick = function(element) {
   /*
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.executeScript(
           tabs[0].id,
           {code: 'document.body.style.backgroundColor = "' + color + '";'});
     }); */
-    toggleInPageChatbot();
+    var castId = "1234"; // TODO: Make this random.
+    sendCastCmd("newCast", castId);
   };
 
-function toggleInPageChatbot() {
+connectCast.onclick = function(element) {
+  /*
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.executeScript(
+          tabs[0].id,
+          {code: 'document.body.style.backgroundColor = "' + color + '";'});
+    }); */
+  var castId = "1234"; // TODO: Make this random.
+  chrome.tabs.create({ url: chrome.extension.getURL('factor.html')});
+};
+
+function sendCastCmd(command, id) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var currTab = tabs[0];
     if (currTab) { // Sanity check
       // send message to tab.
-      chrome.tabs.sendMessage(tabs[0].id, {cmd: "toggle"}, function(response) {
-    // console.log("So the result was:" + response.result);
+      chrome.tabs.sendMessage(tabs[0].id, {cmd: command, castId: id}, function(response) {
+      console.log("Got response :" + response.result);
   });
     }
   });
