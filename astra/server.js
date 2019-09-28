@@ -6,8 +6,9 @@ var fs = require('fs');
 
 var server = http.createServer();
 
-var projector;
+var castSource;
 var receivers = [];
+var messages = [];
 
 server.on('upgrade', function(request, rawSocket, body) {
     if (WebSocket.isWebSocket(request)) {
@@ -15,11 +16,44 @@ server.on('upgrade', function(request, rawSocket, body) {
 
         if (request.url == "/cast") {
             // new source for casting.
+            console.log('new cast session.');
+            if (castSource) {
+                console.log('closing existing cast source');
+                castSource.close();
+                messages = [];
+            }
+
+            castSource = ws;
+
+            // Maybe sent a reset message ?
+            ws.onmessage = function(event) {
+                // event is of type MessageEvent https://html.spec.whatwg.org/multipage/comms.html#messageevent
+                console.log('message received. now at ' + messages.length + ' . sending to ' + receivers.length);
+                receivers.forEach(function(receiver) {
+                    receiver.send(event.data);
+                });
+                messages.push(event.data);
+            }
+
+            ws.onclose = function () {
+                console.log('closing cast session.');
+                messages = [];
+                castSource = null;
+                ws = null;
+            }
+            console.log(' new cast session created.');
         }
 
         if (request.url == "/connect") {
             // new receiver.
             receivers.push(ws);
+            console.log('Receiver opened, now at ' + receivers.length + ' sending ' +  messages.length + ' messages.');
+            ws.send(JSON.stringify(messages));
+            ws.onclose = function () {
+                var index = receivers.indexOf(socket);
+                receivers.splice(index, 1);
+                console.log('receiver closed. now at ' + receivers.length);
+            };
         }
 
         ws.on('close', function(event) {
