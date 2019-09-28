@@ -53,7 +53,7 @@ function captureDomSnapshot() {
   console.log(myTestObject.sayHello());
 }
 
-var serverUrl = "ws://localhost:8080/newCast";
+var serverUrl = "ws://localhost:8080/cast";
 
 function newCast(castId) {
   alert("Starting cast with ID: " + castId);
@@ -62,6 +62,13 @@ function newCast(castId) {
     var count = 0;
     ws.send(" some message");
     setInterval(function () { count ++; ws.send(" message number " + count);}, 500);
+  }
+  ws.onerror = function(error) {
+    console.log("WebSocket error: " + error.error);
+    clearInterval();
+  }
+  ws.onclose = function() {
+    console.log("Websocket: closing");
   }
 }
 
