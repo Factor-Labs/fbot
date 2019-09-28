@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Factor-Labs/fbot/issues"
   },
-  "homepage": "https://github.com/Factor-Labs/fbot#readme"
+  "homepage": "https://github.com/Factor-Labs/fbot#readme",
+  "dependencies": {
+    "faye-websocket": "^0.11.3"
+  }
 }
