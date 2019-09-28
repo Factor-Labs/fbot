@@ -53,8 +53,16 @@ function captureDomSnapshot() {
   console.log(myTestObject.sayHello());
 }
 
+var serverUrl = "ws://localhost:8080/newCast";
+
 function newCast(castId) {
   alert("Starting cast with ID: " + castId);
+  var ws = new WebSocket(serverUrl);
+  ws.onopen = function() {
+    var count = 0;
+    ws.send(" some message");
+    setInterval(function () { count ++; ws.send(" message number " + count);}, 500);
+  }
 }
 
 function connectCast(castId) {
