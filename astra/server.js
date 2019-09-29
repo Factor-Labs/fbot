@@ -50,16 +50,16 @@ server.on('upgrade', function(request, rawSocket, body) {
             console.log('Receiver opened, now at ' + receivers.length + ' sending ' +  messages.length + ' messages.');
             ws.send(JSON.stringify(messages));
             ws.onclose = function () {
-                var index = receivers.indexOf(socket);
+                var index = receivers.indexOf(ws);
                 receivers.splice(index, 1);
                 console.log('receiver closed. now at ' + receivers.length);
             };
         }
-
-        ws.on('close', function(event) {
-            console.log('close', event.code, event.reason);
-            ws = null;
-        });
+//
+//        ws.on('close', function(event) {
+//            console.log('close', event.code, event.reason);
+//            ws = null;
+//        });
     }
 
 });
