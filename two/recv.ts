@@ -1,5 +1,7 @@
 
-var receiverUrl = "ws://localhost:8080/connect";
+var receiverUrl = "wss://localhost:8080/connect";
+
+receiverUrl = "wss://astra-fbot.appspot.com/connect";
 
 var socket = new WebSocket(receiverUrl);
 

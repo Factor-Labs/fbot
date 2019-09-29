@@ -6,6 +6,8 @@
       console.log('The color is green.');
     });
 
+var serverUrl = "ws://astra-fbot.appspot.com/cast";
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if(request.cmd == "read_file") {
         $.ajax({
@@ -16,5 +18,30 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       console.log("Got request read_file.");
       return true;
     }
-})
+
+    if (request.cmd == "newCastBg") {
+      newCast("1234");
+    }
+
+    if (request.cmd == "cast") {
+
+    }
+});
+
+function newCast(castId) {
+  alert("Starting cast with ID: " + castId);
+  var ws = new WebSocket(serverUrl);
+  ws.onopen = function() {
+    var count = 0;
+    ws.send(" some message");
+    setInterval(function () { count ++; ws.send(" message number " + count);}, 500);
+  }
+  ws.onerror = function(error) {
+    console.log("WebSocket error: " + error.error);
+    clearInterval();
+  }
+  ws.onclose = function() {
+    console.log("Websocket: closing");
+  }
+}
 

@@ -27,8 +27,10 @@ chrome.runtime.onMessage.addListener(
       "from a content script:" + sender.tab.url :
       "from the extension");
     if (request.cmd == "newCast") {
-      newCast(request.castId);
+      //newCast(request.castId);
       sendResponse({result: "success"});
+      chrome.runtime.sendMessage({cmd: "newCastBg"});
+
     } else if (request.cmd == "connectCast") {
       connectCast(request.castId);
       sendResponse({result: "success"});
@@ -37,6 +39,11 @@ chrome.runtime.onMessage.addListener(
       sendResponse({result: "failure"});
     }
   });
+
+
+function sendBackgroundMessage(messageType) {
+
+}
 
 console.log("console js script started !");
 
@@ -53,7 +60,9 @@ function captureDomSnapshot() {
   console.log(myTestObject.sayHello());
 }
 
-var serverUrl = "ws://localhost:8080/cast";
+var serverUrl = "wss://localhost:8080/cast";
+
+serverUrl = "wss://astra-fbot.appspot.com/cast";
 
 function newCast(castId) {
   alert("Starting cast with ID: " + castId);
