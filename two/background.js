@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     if (request.cmd == "newCastBg") {
-      newCast("1234");
+      //newCast("1234");
     }
 
     if (request.cmd == "cast") {

@@ -48,7 +48,7 @@ server.on('upgrade', function(request, rawSocket, body) {
             // new receiver.
             receivers.push(ws);
             console.log('Receiver opened, now at ' + receivers.length + ' sending ' +  messages.length + ' messages.');
-            ws.send(JSON.stringify(messages));
+            messages.forEach(function (msg) { ws.send(msg);});
             ws.onclose = function () {
                 var index = receivers.indexOf(ws);
                 receivers.splice(index, 1);

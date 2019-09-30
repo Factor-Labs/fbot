@@ -32,6 +32,7 @@
 	    ],
       "run_at": "document_idle",
 	    "js":["jquery-3.4.1.min.js",
+            "rrweb-record.min.js",
             "rrweb.js", "content.js"]
     }
     ],
